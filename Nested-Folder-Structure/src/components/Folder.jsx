@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Folder({ explorer, handleInsertNode }) {
+function Folder({ explorer, handleInsertNode, handleDeleteNode }) {
   
    const [expand, setExpand] = useState(false)
    const [showInput, setShowInput] = useState({visible: false, isFolder: null})
@@ -23,6 +23,10 @@ function Folder({ explorer, handleInsertNode }) {
       }
    }
 
+   // const onDeleteNode = () => {
+   //    handleDeleteNode(explorer.id)
+   // }
+
   if(explorer.isFolder){
    return (
       <div className="ml-3 py-1">
@@ -34,6 +38,8 @@ function Folder({ explorer, handleInsertNode }) {
             className="bg-black rounded-lg text-white text-sm px-2 mx-2">Add Folder +</button>
             <button onClick={(e) => handleNewFolder(e, false)}
             className="bg-black rounded-lg text-white text-sm px-2 mx-2">Add File +</button>
+            <button  className="bg-black rounded-lg text-white text-sm px-2 mx-2">✍️</button>
+            <button onClick={() => handleDeleteNode(explorer.id)} className="bg-black rounded-lg text-white text-sm px-2 mx-2">❌</button>
           </div>
         </div>
         <div className={`${expand ? "block" : "hidden"}`}>
@@ -46,8 +52,8 @@ function Folder({ explorer, handleInsertNode }) {
             )
          }
 
-           {explorer.items.map((exp) => {
-              return <div key={exp.id} className="ml-5 p-0 gap-0"><Folder handleInsertNode={handleInsertNode} explorer={exp} /></div>
+           {explorer.items.map((exp, index) => {
+              return <div key={index} className="ml-5 p-0 gap-0"><Folder handleDeleteNode={handleDeleteNode} handleInsertNode={handleInsertNode} explorer={exp} /></div>
            })}
         </div>
       </div>
@@ -60,4 +66,3 @@ function Folder({ explorer, handleInsertNode }) {
 export default Folder;
 
 
-// {exp.isFolder ? "📁" : "📄"} {exp.name}

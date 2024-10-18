@@ -18,7 +18,21 @@ function useTraverse() {
    return ({...tree, items: latestNode})
   }
 
-  return {insertNode}
+
+  const deleteNode = (tree, folderId) => {
+   if(tree.id === folderId){
+      return null
+   }
+
+   let filteredItems = tree.items
+    .map(item => deleteNode(item, folderId)) // Apply deleteNode to each child
+    .filter(item => item !== null); // Filter out null values (deleted nodes)
+
+   return ({...tree, items: filteredItems})
+  };
+
+
+  return {insertNode, deleteNode}
 }
 
 export default useTraverse

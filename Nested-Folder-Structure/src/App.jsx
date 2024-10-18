@@ -7,17 +7,23 @@ function App() {
 
   const [explorerData, setExplorerData] = useState(explorer)
   
-  const {insertNode} = useTraverse()
+  const {insertNode, deleteNode} = useTraverse()
 
   const handleInsertNode = (folderId, item, isFolder) => {
     const newTree = insertNode(explorerData, folderId, item, isFolder)
 
     setExplorerData(newTree)
   }
+
+  const handleDeleteNode = (folderId) => {
+    const newTree = deleteNode(explorerData, folderId)
+    setExplorerData(newTree)
+  }
+
   
   return (
     <>
-      <Folder handleInsertNode={handleInsertNode} explorer={explorerData} />
+      <Folder handleDeleteNode={handleDeleteNode} handleInsertNode={handleInsertNode} explorer={explorerData} />
     </>
   )
 }
